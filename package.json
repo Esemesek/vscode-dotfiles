@@ -1,0 +1,14 @@
+{
+  "name": "vscode-dotfiles",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Esemesek/vscode-dotfiles",
+  "author": "Kacper Wiszczuk <kacperwiszczuk@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^3.0.1"
+  }
+}
