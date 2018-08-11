@@ -3,7 +3,7 @@ version: 2
 working_directory: &working_directory ~/repo
 
 defaults: &defaults
-  working_directory: &working_directory
+  working_directory: *working_directory
   docker:
     - image: circleci/node:latest
 
@@ -13,7 +13,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: &working_directory
+          at: *working_directory
       - restore_cache:
           keys:
             - v1-0-dependencies-{{ checksum "package.json" }}
@@ -23,7 +23,7 @@ jobs:
           command: yarn
       - save_cache:
           key: v1-0-dependencies-{{ checksum "package.json" }}
-          paths:
+          path:
             - node_modules
             - yarn.lock
       - persist_to_workspace:
@@ -34,7 +34,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: &working_directory
+          at: *working_directory
       - run:
           name: Build
           command: yarn build
@@ -43,7 +43,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: &working_directory
+          at: *working_directory
       - run:
           name: Test
           command: yarn test:ci
