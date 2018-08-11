@@ -8,7 +8,7 @@ defaults: &defaults
     - image: circleci/node:latest
 
 jobs:
-  install-dependencies;
+  install-dependencies:
     <<: *defaults
     steps:
       - checkout
