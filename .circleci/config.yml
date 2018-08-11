@@ -23,7 +23,7 @@ jobs:
           command: yarn
       - save_cache:
           key: v1-0-dependencies-{{ checksum "package.json" }}
-          path:
+          paths:
             - node_modules
             - yarn.lock
       - persist_to_workspace:
