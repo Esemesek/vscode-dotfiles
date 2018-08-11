@@ -1,0 +1,61 @@
+version: 2
+
+working_directory: &working_directory ~/repo
+
+defaults: &defaults
+  working_directory: &working_directory
+  docker:
+    - image: circleci/node:latest
+
+jobs:
+  install-dependencies;
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: &working_directory
+      - restore_cache:
+          keys:
+            - v1-0-dependencies-{{ checksum "package.json" }}
+            - v1-0-dependencies-
+      - run:
+          name: Install dependencies
+          command: yarn
+      - save_cache:
+          key: v1-0-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+            - yarn.lock
+      - persist_to_workspace:
+          root: .
+          paths: .
+
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: &working_directory
+      - run:
+          name: Build
+          command: yarn build
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: &working_directory
+      - run:
+          name: Test
+          command: yarn test:ci
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - install_dependencies
+      - build:
+          requires:
+            - install_dependencies
+      - test:
+          requires:
+            - install_dependencies

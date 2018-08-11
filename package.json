@@ -6,7 +6,9 @@
   "author": "Kacper Wiszczuk <kacperwiszczuk@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "echo Command not specified",
+    "test:ci": "echo Command not specified"
   },
   "devDependencies": {
     "typescript": "^3.0.1"
